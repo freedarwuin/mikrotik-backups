@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
 #
-# Please note that for the correct operation you
-# will need the utilities found here
+# Tenga en cuenta que para el correcto funcionamiento
+# necesitará las utilidades que se encuentran aquí
 #
 #
 DIR=                   # example: DIR=/home/user/backups/
@@ -14,7 +14,7 @@ DATE=$(echo `date +%Y.%m.%d`)
 exec 2>> $DIR$DATE".log"
 gg=success
 #
-##### DO NOT DELETE COMMENTS IN THE BLOCK BELOW #####
+##### NO ELIMINAR COMENTARIOS EN EL BLOQUE DE ABAJO #####
 #
 # router0               
 #
@@ -28,11 +28,11 @@ function startsaver {
 #
 startsaver >> $DIR$DATE.log
 #
-##### DO NOT DELETE COMMENTS IN THE BLOCK ABOVE #####
+##### NO ELIMINAR COMENTARIOS EN EL BLOQUE ANTERIOR #####
 #
 #
 #
-##### ARCHIVING BACKUPS AND DELETING OLD VERSIONS #####
+##### ARCHIVO DE COPIAS DE SEGURIDAD Y ELIMINACIÓN DE VERSIONES ANTIGUAS #####
 #
 statsave=$(cat $DIR$DATE.log | grep "ERROR \| failed \| denied \| error \| Permission" && echo ERROR || echo success )
 #
@@ -40,7 +40,7 @@ function archandel {
 echo "
 
   _______________________________
-  Archiving of collected backup's started:"
+  Se inició el archivado de las copias de seguridad recopiladas:"
 if [ "$statsave" = "$gg" ]
   then
     zip -9 -j $DIR$DATE.zip $DIR*.backup $DIR*rsc
@@ -54,11 +54,11 @@ if [ "$statsave" = "$gg" ]
   else
     echo "  ...............................
                 ERROR
-    not all backups are received
-        сheck the correctness
-         of the entered data
-          and read the log!
-  ..............................."
+     no se reciben todas las copias de seguridad
+              comprobar la corrección
+              de los datos ingresados
+                y leer el registro!
+     ......................................"
     zip -9 -j $DIR$DATE"_brocken".zip $DIR*.backup $DIR*rsc
     rm $DIR*.backup $DIR*.rsc
     echo "  _______________________________"
@@ -70,7 +70,7 @@ archandel >> $DIR$DATE.log
 #
 #
 #
-##### TELEGRAM ALERT SETTINGS #####
+##### AJUSTES DE ALERTAS DE TELEGRAM #####
 #TOKEN=
 #IDCHAT=
 #URL="https://api.telegram.org/bot$TOKEN/sendMessage"
@@ -80,15 +80,15 @@ archandel >> $DIR$DATE.log
 #Function alerts
 #function alert {
 #  echo "  _______________________________
-#  Alerts are generated"
+#  Se generan alertas"
 #if [ "$statsave" = "$gg" ]
 #  then
 #    $TGMESS --data-urlencode "text=Creation of backups $DATE was successful"
-#    echo "END
+#    echo "FIN
 #  _______________________________"
 #  else
 #    $TGMESS --data-urlencode "text=An error occurred while creating backups, check the $DATE log"
-#    echo "END
+#    echo "FIN
 #  _______________________________"
 #fi
 #}
