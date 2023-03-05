@@ -4,7 +4,7 @@ import re
 import fileinput
 import os
 
-# We determine the serial number of the next router
+# Determinamos el número de serie del próximo enrutador
 openfile = open('Mikrotik_backuper.sh')
 readfile = openfile.read()
 pattern = 'router\\d+'
@@ -13,11 +13,11 @@ numbers = list(map(lambda x: x[6:], all_router))
 tru_numbers = list(set(list(map(int, numbers))))
 a = str(max(tru_numbers) + 1)
 openfile.close()
-# This is where the data is received
+# Aquí es donde se reciben los datos
 ipset = str(input('Enter Ip ->: '))
 ippasswd = str(input('Enter password ->: '))
 ipname = str(input('Enter router name ->: '))
-# Next comes the template, which is passed to the main script
+# Luego viene la plantilla, que se pasa al script principal
 tamplate_stat = str('=$(netcat -w3 -z ' + '$IP' + a + ' $PRT && echo success || echo fail)')
 tamplate_name = '  router' + a + '\n' + '# NEWNAME'
 tamplate_variable = (
@@ -115,7 +115,7 @@ tamplate_func = (
                         'echo "' + '\r'
                 ) + \
                 (
-                        '  Cleaning router directory...' + '\r'
+                        '  Limpiando el directorio del enrutador...' + '\r'
                 ) + \
                 (
                         '"' + '\r'
@@ -160,7 +160,7 @@ tamplate_func = (
                         '  ERROR $IP' + a + ' ($NAME' + a + '),' + '\r'
                 ) + \
                 (
-                        "  backup can't create and save" + '\r'
+                        "  la copia de seguridad no puede crear y guardar" + '\r'
                 ) + \
                 (
                         '  ...................................................' + '\r'
@@ -183,7 +183,7 @@ tamplate_func = (
                 (
                     '#NEWFUNK'
                 )
-# The code below actually changes the main script ('.backup' is added to the original file)
+# El siguiente código en realidad cambia el script principal ('.backup' se agrega al archivo original)
 with fileinput.FileInput('Mikrotik_backuper.sh', inplace=True, backup='.backup') as file:
     for line in file:
         line = line.rstrip()
